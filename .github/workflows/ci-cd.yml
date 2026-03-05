@@ -10,37 +10,20 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
-
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-        python-version: '3.11'
-
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
-        pip install pytest httpx
-
-    - name: Run tests
-      run: pytest test_api.py -v
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      - run: pip install -r requirements.txt pytest httpx
+      - run: pytest test_api.py -v
 
   deploy:
     needs: test
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-
+    if: github.ref == 'refs/heads/main'
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
-
-    - name: Deploy to Hugging Face
-      env:
-        HF_TOKEN: ${{ secrets.HF_TOKEN }}
-      run: |
-        git config --global user.email "github-actions@github.com"
-        git config --global user.name "GitHub Actions"
-        git push https://ridmit3:$HF_TOKEN@huggingface.co/spaces/ridmit3/churn-prediction-api main --force  
- 
+      - uses: actions/checkout@v3
+      - name: Push to Hugging Face
+        run: git push https://ridmit3:${{ secrets.HF_TOKEN }}@huggingface.co/spaces/ridmit3/churn-prediction-api main --force
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
