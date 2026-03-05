@@ -22,7 +22,7 @@ jobs:
         pip install -r requirements.txt
         pip install pytest pytest-cov httpx
     - name: Run tests
-      run: pytest test_api.py -v --cov=api --cov-report=term-missing
+      run: pytest test_api.py -v
     - name: Test summary
       if: always()
       run: echo "Tests completed!"
@@ -42,5 +42,5 @@ jobs:
       run: |
         git config --global user.email "github-actions@github.com"
         git config --global user.name "GitHub Actions"
-        git remote set-url origin https://ridmit3:${HF_TOKEN}@huggingface.co/spaces/ridmit3/churn-prediction-api
+        git remote set-url origin https://ridmit3:$HF_TOKEN@huggingface.co/spaces/ridmit3/churn-prediction-api
         git push origin main --force
