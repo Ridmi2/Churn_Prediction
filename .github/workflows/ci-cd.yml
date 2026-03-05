@@ -5,6 +5,7 @@ on:
     branches: [ main ]
   pull_request:
     branches: [ main ]
+  workflow_dispatch:
 
 jobs:
   test:
@@ -24,6 +25,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Push to Hugging Face
-        run: git push https://ridmit3:${{ secrets.HF_TOKEN }}@huggingface.co/spaces/ridmit3/churn-prediction-api main --force
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: git push https://ridmit3:$HF_TOKEN@huggingface.co/spaces/ridmit3/churn-prediction-api main --force
