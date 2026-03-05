@@ -26,13 +26,9 @@ jobs:
           fetch-depth: 0
       - name: Push to Hugging Face
         run: |
-          pip install huggingface_hub
-          python -c "
-          import subprocess, os
-          token = os.environ['TOKEN']
-          url = f'https://ridmit3:{token}@huggingface.co/spaces/ridmit3/churn-prediction-api'
-          subprocess.run(['git', 'remote', 'add', 'huggingface', url], check=True)
-          subprocess.run(['git', 'push', 'huggingface', 'main', '--force'], check=True)
-          "
-        env:
-          TOKEN: ${{ secrets.HF_TOKEN }}
+          git config --global user.email "github-actions@github.com"
+          git config --global user.name "GitHub Actions"
+          git config --global credential.helper store
+          echo "https://ridmit3:${{ secrets.HF_TOKEN }}@huggingface.co" > ~/.git-credentials
+          git remote add huggingface https://huggingface.co/spaces/ridmit3/churn-prediction-api || true
+          git push huggingface main --force
