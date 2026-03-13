@@ -52,6 +52,5 @@ jobs:
           git config --global user.email "github-actions@github.com"
           git config --global user.name "GitHub Actions"
           CLEAN_TOKEN=$(echo -n "$HF_TOKEN" | tr -d '[:space:]')
-          git remote remove hff "https://ridmit3:${CLEAN_TOKEN}@huggingface.co/spaces/ridmit3/churn-prediction-api"
-          git push 2>/dev/null || true
-          git remote add h hf main --force
+          git remote add hf "https://ridmit3:${CLEAN_TOKEN}@huggingface.co/spaces/ridmit3/churn-prediction-api"
+          git push hf main --force
