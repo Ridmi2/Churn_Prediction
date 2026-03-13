@@ -51,5 +51,6 @@ jobs:
         run: |
           git config --global user.email "github-actions@github.com"
           git config --global user.name "GitHub Actions"
-          git remote set-url origin https://ridmit3:$HF_TOKEN@huggingface.co/spaces/ridmit3/churn-prediction-api
-          git push origin main --force
+          git remote remove hf 2>/dev/null || true
+          git remote add hf https://ridmit3:$HF_TOKEN@huggingface.co/spaces/ridmit3/churn-prediction-api
+          git push hf main --force
