@@ -291,15 +291,16 @@ def preprocess(data: CustomerData) -> np.ndarray:
 @app.get("/")
 def home():
     return {
-        "message": "Churn Prediction API",
+        "message": "Churn Prediction API v2.0 - Now with CI/CD!",
         "model": type(model).__name__,
-        "version": "1.0.0",
+        "version": "2.0.0",
         "endpoints": {
             "predict": "/predict",
-            "predict_batch": "/predict/batch",
+            "batch": "/predict/batch",
             "health": "/health",
             "docs": "/docs"
-        }
+        },
+        "ci_cd": "Automated with GitHub Actions"
     }
 
 @app.get("/health")
